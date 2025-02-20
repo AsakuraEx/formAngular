@@ -1,0 +1,75 @@
+<div class="mt-4 card bg-white">
+    <div class="card-body">
+        <h4 class="card-title">Registro de nuevo procedimiento:</h4>
+
+        <form (submit)="SubmitEventHandler()" #ProcForm="ngForm">
+
+          <div>
+              <label for="codigo" class="form-label">Código:</label>
+              <input
+                  type="text"
+                  id="codigo"
+                  class="form-control"
+                  name="codigo"
+                  #codigo="ngModel"
+                  [(ngModel)]="formData.codigo"
+                  [class.is-invalid]="error.codigo"
+                  (focus)=" error.codigo='' "
+              >
+              <p class="text-danger fs-6"> {{ error.codigo }} </p>
+          </div>
+
+          <div>
+              <label for="procedimiento" class="form-label">Procedimiento:</label>
+              <input
+                  type="text"
+                  id="procedimiento"
+                  class="form-control"
+                  name="nombre"
+                  #nombre="ngModel"
+                  [(ngModel)]="formData.nombre"
+                  [class.is-invalid]="error.nombre"
+                  (focus)=" error.nombre='' "
+              >
+              <p class="text-danger fs-6"> {{ error.nombre }} </p>
+          </div>
+
+          <div>
+              <label for="tipo" class="form-label">Tipo de procedimiento:</label>
+              <select
+                  id="tipo"
+                  class="form-select"
+                  name="tipo"
+                  #nombre="ngModel"
+                  [(ngModel)]="formData.tipo"
+                  [class.is-invalid]="error.tipo"
+                  (focus)=" error.tipo='' "
+              >
+                <option value='' selected>Seleccione...</option>
+                <option value="Quirúrgico">Quirúrgico</option>
+                <option value="Oftalmológico">Oftalmológico</option>
+              </select>
+              <p class="text-danger fs-6"> {{ error.tipo }} </p>
+          </div>
+
+          <div>
+            <button class="btn btn-primary me-1" type="submit">Registrar Nuevo</button>
+            <button class="btn btn-secondary" type="reset">Limpiar</button>
+          </div>
+        </form>
+
+        @if(exito){
+          <div class="alert alert-success mt-4" role="alert">
+            Se registro el procedimiento exitosamente.
+          </div>
+        }
+
+        @if (error.catch) {
+          <div class="alert alert-danger mt-4" role="alert">
+            {{ error.catch }}
+          </div>
+        }
+
+
+    </div>
+</div>

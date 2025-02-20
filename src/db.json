@@ -1,0 +1,22 @@
+{
+  "procedimientos": [
+    {
+      "id": "7167",
+      "codigo": "a4",
+      "nombre": "Retiro de puntos",
+      "tipo": "Quirúrgico"
+    },
+    {
+      "id": "b9e6",
+      "codigo": "a4",
+      "nombre": "Francisco Escobar",
+      "tipo": "Quirúrgico"
+    },
+    {
+      "id": "2c95",
+      "codigo": "a5",
+      "nombre": "Retiro de Puntos",
+      "tipo": "Quirúrgico"
+    }
+  ]
+}
