@@ -1,21 +1,27 @@
 {
   "procedimientos": [
     {
-      "id": "7167",
-      "codigo": "a4",
-      "nombre": "Retiro de puntos",
+      "id": "e7685b",
+      "codigo": "29.1",
+      "nombre": "Procedimiento 2",
+      "tipo": "Oftalmológico"
+    },
+    {
+      "id": "f5fd31",
+      "codigo": "29.2",
+      "nombre": "Procedimiento 3",
       "tipo": "Quirúrgico"
     },
     {
-      "id": "b9e6",
-      "codigo": "a4",
-      "nombre": "Francisco Escobar",
+      "id": "08912d",
+      "codigo": "29.3",
+      "nombre": "Procedimiento 4",
       "tipo": "Quirúrgico"
     },
     {
-      "id": "2c95",
-      "codigo": "a5",
-      "nombre": "Retiro de Puntos",
+      "id": "90d308",
+      "codigo": "29.4",
+      "nombre": "Procedimiento 5",
       "tipo": "Quirúrgico"
     }
   ]

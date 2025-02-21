@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Procedimiento } from '../../../model/procedimiento';
+import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
 @Component({
@@ -8,12 +9,17 @@ import axios from 'axios';
   imports: [FormsModule],
   templateUrl: './formulario.component.html'
 })
-export class FormularioComponent {
+export class FormularioComponent implements OnInit {
+  // Variables
+  datos:Procedimiento[] = []
+  
+  baseUrl:string = 'http://192.168.1.2:3000'
 
   formData:Procedimiento = {
     codigo: '',
     nombre: '',
-    tipo: ''
+    tipo: '',
+    id: ''
   }
 
   error = {
@@ -23,11 +29,34 @@ export class FormularioComponent {
     catch: ''
   }
 
+
   codigosError: Record<string, string> = {
     'Network Error': 'Ocurrió un error en la red.'
   }
 
-  exito:boolean = false
+  exito:string = ''
+
+  // Metodos 
+  async ngOnInit(): Promise<void> {
+    this.datos = await this.ObtenerDatos()
+  }
+
+  async ObtenerDatos(): Promise<Procedimiento[]> {
+    try {
+      
+      const {status, data} = await axios.get<Procedimiento[]>(this.baseUrl+'/procedimientos')
+      
+      if(status === 200){
+        return data
+      } else {
+        return []
+      }
+
+    } catch (error) {
+        console.error(error)
+        return []
+    }
+  }
 
   async SubmitEventHandler() {
 
@@ -46,28 +75,56 @@ export class FormularioComponent {
       return
     }
 
+    this.formData.id = uuid().split('-')[0].substring(0,6)
+
     try {
-      const { status } = await axios.post('http://localhost:3000/procedimientos', this.formData)
+      const { status } = await axios.post(this.baseUrl+'/procedimientos', this.formData)
 
       if (status === 201){
-        this.exito = true
+        this.exito = 'Se registro el procedimiento exitosamente'
         this.error.catch = ''
 
         Object.assign(this.formData, {
           codigo: '',
           nombre: '',
-          tipo: ''
+          tipo: '',
+          id: ''
         })
 
+        this.datos = await this.ObtenerDatos()
+
         setTimeout(()=>{
-          this.exito = false
+          this.exito = ''
+        }, 3000)
+      }
+
+
+
+    } catch (err) {
+      this.error.catch = this.codigosError[(err as Error).message] || 'Error desconocido'
+    }
+
+  }
+
+  async DeleteItem(id:string): Promise<void> {
+
+    try {
+      const { status } = await axios.delete(this.baseUrl+`/procedimientos/${id}`)
+
+      if (status === 200){
+        this.exito = 'Se elimino el procedimiento exitosamente'
+        this.error.catch = ''
+
+        this.datos = await this.ObtenerDatos()
+
+        setTimeout(()=>{
+          this.exito = ''
         }, 3000)
       }
 
     } catch (err) {
       this.error.catch = this.codigosError[(err as Error).message] || 'Error desconocido'
     }
-
   }
 
 }
